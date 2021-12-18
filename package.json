@@ -33,9 +33,8 @@
     "processenv": "3.0.4"
   },
   "devDependencies": {
-    "@sealsystems/eslint-config-es": "3.6.8",
-    "@sealsystems/mocha": "4.1.11",
-    "@sealsystems/semantic-release": "4.3.7",
+    "@sealsystems/eslint-config-es": "3.7.0",
+    "@sealsystems/mocha": "4.2.0",
     "nodeenv": "3.0.68",
     "proxyquire": "2.1.3",
     "uuid": "8.3.2"
@@ -44,7 +43,6 @@
     "extends": "@sealsystems/semantic-release/node-module"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   }
 }
