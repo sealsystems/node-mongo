@@ -8,7 +8,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const mongo = require('../lib/mongo');
 
-const MockMongoClient = function(urlString, options) {
+const MockMongoClient = function (urlString, options) {
   this.options = options;
   this.connect = async () => {
     // empty
@@ -32,7 +32,7 @@ const mongoMock = proxyquire('../lib/mongo', {
   }
 });
 
-const sleep = function(ms) {
+const sleep = function (ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
@@ -73,7 +73,7 @@ suite('mongo', () => {
         .is.throwingAsync('Connection string is missing.');
     });
 
-    test('throws an error if the given MongoDB is not reachable.', async function() {
+    test('throws an error if the given MongoDB is not reachable.', async function () {
       this.timeout(10 * 1000);
 
       try {
@@ -90,7 +90,7 @@ suite('mongo', () => {
       }
     });
 
-    test('connectionRetries equals to 0 does try to connect only once.', async function() {
+    test('connectionRetries equals to 0 does try to connect only once.', async function () {
       this.timeout(10 * 1000);
 
       try {
@@ -107,7 +107,7 @@ suite('mongo', () => {
       }
     });
 
-    test('returns a reference to the database.', async function() {
+    test('returns a reference to the database.', async function () {
       this.timeout(10 * 1000);
       const db = await mongo.db(connectionStringFoo);
 
@@ -205,7 +205,7 @@ suite('mongo', () => {
             .is.throwingAsync();
         });
 
-        test('reads file', async function() {
+        test('reads file', async function () {
           this.timeout(10 * 1000);
 
           const db = await mongo.db(connectionStringFoo);
@@ -255,7 +255,7 @@ suite('mongo', () => {
           });
         });
 
-        test('sets cursor timeout', async function() {
+        test('sets cursor timeout', async function () {
           this.timeout(10 * 1000);
 
           const db = await mongo.db(connectionStringCursor, { noCursorTimeout: true });
