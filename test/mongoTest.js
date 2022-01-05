@@ -243,7 +243,7 @@ suite('mongo', () => {
                 try {
                   assert.that(chunk.toString()).is.equalTo(content);
                   // tests in data event, because cursor is created at first read
-                  assert.that(stream.s.cursor.cmd.noCursorTimeout).is.falsy();
+                  assert.that(stream.s.cursor.cursorOptions.noCursorTimeout).is.falsy();
                 } catch (ex) {
                   reject(ex);
                 }
@@ -289,15 +289,15 @@ suite('mongo', () => {
 
               const { stream } = await gridfs.createReadStream(fileName);
 
-              // test for mongo client version
-              assert.that(stream.s).is.ofType('object');
-              assert.that(stream.s.cursor).is.not.undefined();
-
               stream.on('data', (chunk) => {
                 try {
+                  // test for mongo client version
+                  assert.that(stream.s).is.ofType('object');
+                  assert.that(stream.s.cursor).is.not.undefined();
+
                   assert.that(chunk.toString()).is.equalTo(content);
                   // tests in data event, because cursor is created at first read
-                  assert.that(stream.s.cursor.cmd.noCursorTimeout).is.true();
+                  assert.that(stream.s.cursor.cursorOptions.noCursorTimeout).is.true();
                 } catch (ex) {
                   reject(ex);
                 }
