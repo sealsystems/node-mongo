@@ -1,3 +1,10 @@
+## 3.1.4 (2022-01-05)
+
+### Chores
+
+
+Updated mongodb to latest 3.6.x version ([0e97cf6](https://github.com/sealsystems/node-mongo/commit/0e97cf6))
+
 ## 3.1.3 (2021-05-31)
 
 ### Chores
