@@ -33,8 +33,8 @@
     "processenv": "3.0.9"
   },
   "devDependencies": {
-    "@sealsystems/eslint-config-es": "3.7.1",
-    "@sealsystems/mocha": "4.2.0",
+    "@sealsystems/eslint-config-es": "3.7.6",
+    "@sealsystems/mocha": "4.2.3",
     "nodeenv": "3.0.71",
     "proxyquire": "2.1.3",
     "uuid": "8.3.2"
