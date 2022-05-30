@@ -550,5 +550,24 @@ suite('mongo', () => {
         });
       });
     });
+
+    suite('executeTransaction', () => {
+      test('is a function.', async () => {
+        const db = await mongo.db(connectionStringFoo);
+
+        assert.that(db.executeTransaction).is.ofType('function');
+      });
+
+      test('calls callback function.', async () => {
+        const db = await mongo.db(connectionStringFoo);
+
+        let session;
+        db.executeTransaction((_session) => {
+          session = _session;
+        });
+
+        assert.that(session).is.ofType('object');
+      });
+    });
   });
 });
