@@ -41,6 +41,40 @@ Now you can use the `db` object to access the database. Please note that this is
 
 *Please note that if you call `db` twice with the same connection string, both calls will use the same underlying connection.*
 
+## Transactions
+`db` has a method `executeTransaction` to execute a transaction. In the callback method you get the session object associated with the transaction for use in your DB calls.
+```javascript
+try {
+  await db.executeTransaction(async (session) => {
+    // do whatever you want within the transaction
+    await myCollection1.findOneAndUpdate(
+      { // my filter
+        $and: [{ _id: 'blabla' }, { status: 'blubb' }]
+      },
+      { // my set
+        $set: { status: 'lalelu' }
+      },
+      { // my properties
+        returnDocument: 'after',
+        session // don't forget the session
+      }
+    );
+    await myCollection2.insertOne(
+      { // my new doc
+        _id: uuid()
+      },
+      { // my properties
+        returnDocument: 'after',
+        session // don't forget the session
+      }
+    );
+  });
+} catch (err) {
+  console.log('Error in transaction - aborting', { err });
+  throw err;
+}
+```
+
 ## Accessing GridFS
 
 If you need to access GridFS, simply call the `db` object's `gridfs` function.
