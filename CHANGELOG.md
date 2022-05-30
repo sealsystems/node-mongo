@@ -1,3 +1,10 @@
+## 3.2.0 (2022-05-30)
+
+### Features
+
+
+execute transaction ([48d91c9](https://github.com/sealsystems/node-mongo/commit/48d91c9))
+
 ## 3.1.6 (2022-02-08)
 
 ### Chores
