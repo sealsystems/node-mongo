@@ -11,27 +11,11 @@ const mongo = require('../lib/mongo');
 const MockMongoClient = function (urlString, options) {
   this.options = options;
   this.connect = async () => {
-    console.log('CON');
+    // empty
   };
   this.db = async () => {
     return this.options;
   };
-  // this.startSession = () => {
-  //   return {
-  //     startTransaction() {
-  //       return { dbSession: 'bla' };
-  //     },
-  //     async commitTransaction() {
-  //       // empty
-  //     },
-  //     async abortTransaction() {
-  //       // empty
-  //     },
-  //     async endSession() {
-  //       // empty
-  //     }
-  //   };
-  // };
 };
 
 const mongoMock = proxyquire('../lib/mongo', {
