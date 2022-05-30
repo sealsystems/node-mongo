@@ -11,19 +11,27 @@ const mongo = require('../lib/mongo');
 const MockMongoClient = function (urlString, options) {
   this.options = options;
   this.connect = async () => {
-    console.log('CON')
+    console.log('CON');
   };
   this.db = async () => {
     return this.options;
   };
   this.startSession = () => {
     return {
-      startTransaction = () => { return { dbSession: 'bla' }},
-      commitTransaction = async () => {},
-      abortTransaction = async () => {},
-      endSession = async() => {}
-    }
-  }
+      startTransaction() {
+        return { dbSession: 'bla' };
+      },
+      async commitTransaction() {
+        // empty
+      },
+      async abortTransaction() {
+        // empty
+      },
+      async endSession() {
+        // empty
+      }
+    };
+  };
 };
 
 const mongoMock = proxyquire('../lib/mongo', {
@@ -115,7 +123,7 @@ suite('mongo', () => {
       }
     });
 
-    test.only('returns a reference to the database.', async function () {
+    test('returns a reference to the database.', async function () {
       this.timeout(10 * 1000);
       const db = await mongo.db(connectionStringFoo);
 
