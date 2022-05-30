@@ -11,11 +11,19 @@ const mongo = require('../lib/mongo');
 const MockMongoClient = function (urlString, options) {
   this.options = options;
   this.connect = async () => {
-    // empty
+    console.log('CON')
   };
   this.db = async () => {
     return this.options;
   };
+  this.startSession = () => {
+    return {
+      startTransaction = () => { return { dbSession: 'bla' }},
+      commitTransaction = async () => {},
+      abortTransaction = async () => {},
+      endSession = async() => {}
+    }
+  }
 };
 
 const mongoMock = proxyquire('../lib/mongo', {
@@ -107,7 +115,7 @@ suite('mongo', () => {
       }
     });
 
-    test('returns a reference to the database.', async function () {
+    test.only('returns a reference to the database.', async function () {
       this.timeout(10 * 1000);
       const db = await mongo.db(connectionStringFoo);
 
@@ -548,6 +556,25 @@ suite('mongo', () => {
 
           assert.that(result2).is.false();
         });
+      });
+    });
+
+    suite('executeTransaction', () => {
+      test('is a function.', async () => {
+        const db = await mongo.db(connectionStringFoo);
+
+        assert.that(db.executeTransaction).is.ofType('function');
+      });
+
+      test('calls callback function.', async () => {
+        const db = await mongo.db(connectionStringFoo);
+
+        let session;
+        db.executeTransaction((_session) => {
+          session = _session;
+        });
+
+        assert.that(session).is.equalTo({ dbSession: 'bla' });
       });
     });
   });
