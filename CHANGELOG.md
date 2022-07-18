@@ -1,3 +1,16 @@
+## 4.0.0 (2022-07-18)
+
+### Features
+
+
+Updated mongo driver to 4.8.0 ([7ea9b4c](https://github.com/sealsystems/node-mongo/commit/7ea9b4c))
+
+
+
+### BREAKING CHANGES
+
+Updated mongodb driver to version 4.8.0, some (lots of?) return values changed!
+
 ## 3.2.0 (2022-05-30)
 
 ### Features
