@@ -291,7 +291,7 @@ suite('mongo', () => {
 
               // test for mongo client version
               assert.that(stream.s).is.ofType('object');
-              //assert.that(stream.s.cursor).is.not.undefined();
+              assert.that(stream.s.cursor).is.not.undefined();
 
               stream.on('data', (chunk) => {
                 try {

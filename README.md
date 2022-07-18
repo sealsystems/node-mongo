@@ -202,7 +202,7 @@ are allowed for NodeJS it's also allowd for MongoDB.
 To build this module use [roboter](https://www.npmjs.com/package/roboter).
 
 ```shell
-$ bot
+bot
 ```
 
 ## Test Hint
