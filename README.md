@@ -5,7 +5,7 @@
 ## Installation
 
 ```shell
-$ npm install @sealsystems/mongo
+npm install @sealsystems/mongo
 ```
 
 ## Quick start
@@ -42,7 +42,9 @@ Now you can use the `db` object to access the database. Please note that this is
 *Please note that if you call `db` twice with the same connection string, both calls will use the same underlying connection.*
 
 ## Transactions
+
 `db` has a method `executeTransaction` to execute a transaction. In the callback method you get the session object associated with the transaction for use in your DB calls.
+
 ```javascript
 try {
   await db.executeTransaction(async (session) => {
@@ -123,6 +125,28 @@ stream.on('close', (err) => {
 
 stream.write('Hello World');
 stream.end();
+```
+
+### gridfs.setMetadata
+
+setMetadata(fileName, metadata)
+
+- fileName `String` Name of the file
+- metadata `Object` Metadata to insert
+
+Inserts or replaces metadata for file `fileName`.
+
+```javascript
+const result = await gridfs.setMetadata('My file.txt', { meta: true });
+
+if (result.acknowledged) {
+  // metadata set succesfully
+}
+
+if (result.matchedCount === 1) {
+  // single file matched
+}
+
 ```
 
 ### gridfs.exist
