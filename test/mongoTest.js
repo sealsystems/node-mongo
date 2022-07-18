@@ -243,7 +243,7 @@ suite('mongo', () => {
                 try {
                   assert.that(chunk.toString()).is.equalTo(content);
                   // tests in data event, because cursor is created at first read
-                  assert.that(stream.s.cursor.cmd.noCursorTimeout).is.falsy();
+                  assert.that(stream.s.cursor.cursorOptions.noCursorTimeout).is.falsy();
                 } catch (ex) {
                   reject(ex);
                 }
@@ -291,13 +291,13 @@ suite('mongo', () => {
 
               // test for mongo client version
               assert.that(stream.s).is.ofType('object');
-              assert.that(stream.s.cursor).is.not.undefined();
 
               stream.on('data', (chunk) => {
                 try {
+                  assert.that(stream.s.cursor).is.not.undefined();
                   assert.that(chunk.toString()).is.equalTo(content);
                   // tests in data event, because cursor is created at first read
-                  assert.that(stream.s.cursor.cmd.noCursorTimeout).is.true();
+                  assert.that(stream.s.cursor.cursorOptions.noCursorTimeout).is.true();
                 } catch (ex) {
                   reject(ex);
                 }
@@ -460,8 +460,8 @@ suite('mongo', () => {
           const metadata = ['1', '2', '3'];
           const result = await gridfs.setMetadata(fileName, metadata);
 
-          assert.that(result.result.ok).is.equalTo(1);
-          assert.that(result.result.n).is.equalTo(1);
+          assert.that(result.acknowledged).is.true();
+          assert.that(result.matchedCount).is.equalTo(1);
 
           const fileData = await gridfs.findFile(fileName);
 
