@@ -1,3 +1,10 @@
+## 4.0.1 (2022-08-15)
+
+### Chores
+
+
+bump [@sealsystems](https://github.com/sealsystems)/tlscert from 2.3.22 to 2.4.0 ([e12b7c7](https://github.com/sealsystems/node-mongo/commit/e12b7c7))
+
 ## 4.0.0 (2022-07-18)
 
 ### Features
