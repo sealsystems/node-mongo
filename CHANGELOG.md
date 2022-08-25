@@ -1,3 +1,12 @@
+## 3.2.1 (2022-08-25)
+
+### Chores
+
+
+fix test ([46c0bb2](https://github.com/sealsystems/node-mongo/commit/46c0bb2))
+
+updated tlscert ([a1828da](https://github.com/sealsystems/node-mongo/commit/a1828da))
+
 ## 3.2.0 (2022-05-30)
 
 ### Features

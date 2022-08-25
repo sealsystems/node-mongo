@@ -1,6 +1,6 @@
 {
   "name": "@sealsystems/mongo",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "@sealsystems/mongo makes it easy to connect to MongoDB reliably",
   "author": {
     "name": "SEAL Systems AG",
@@ -43,6 +43,7 @@
     "extends": "@sealsystems/semantic-release/node-module"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "tag": "bugfix"
   }
 }
