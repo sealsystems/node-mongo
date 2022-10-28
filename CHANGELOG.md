@@ -1,3 +1,10 @@
+## 4.0.2 (2022-10-28)
+
+### Chores
+
+
+Updated to mongo driver 4.11 ([7cdcab6](https://github.com/sealsystems/node-mongo/commit/7cdcab6))
+
 ## 4.0.1 (2022-08-15)
 
 ### Chores
