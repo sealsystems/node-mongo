@@ -84,7 +84,7 @@ suite('mongo', () => {
         });
         throw new Error('X');
       } catch (err) {
-        assert.that(err.name).is.equalTo('MongoServerSelectionError');
+        assert.that(err.name).is.startingWith('MongoServerSelectionError');
         // only for linux:
         // assert.that(err.message).is.containing('ECONNREFUSED');
       }
@@ -101,7 +101,7 @@ suite('mongo', () => {
         });
         throw new Error('X');
       } catch (err) {
-        assert.that(err.name).is.equalTo('MongoServerSelectionError');
+        assert.that(err.name).is.startingWith('MongoServerSelectionError');
         // only for linux:
         // assert.that(err.message).is.containing('ECONNREFUSED');
       }
