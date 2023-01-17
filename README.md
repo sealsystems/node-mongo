@@ -29,6 +29,7 @@ If you need to pass options to the MongoDB connection, e.g. for setting write co
 - `connectionRetries` is the number of retries to connect to MongoDB server, a value of 0 tries to connect only once without retries, default is 10.
 - `waitTimeBetweenRetries` is the time in milliseconds waiting between the retries, default is 1000 ms.
 - `noCursorTimeout` boolean, a true value is indicating that read stream cursors created by subsequent calls to `createReadStream` are not closed automatically after a timeout.
+- `bucketName` string, prefix for gridfs bucket, default is `fs`.
 
 ```javascript
 const db = await mongo.db('mongodb://localhost:27017/mydb', {
@@ -84,6 +85,18 @@ If you need to access GridFS, simply call the `db` object's `gridfs` function.
 ```javascript
 const gridfs = db.gridfs();
 ```
+
+### gridfs.getFilesCollection
+
+getFilesCollection()
+
+Returns gridfs `${bucketName}.files` collection for direct access.
+
+### gridfs.getChunksCollection
+
+getChunksCollection()
+
+Returns gridfs `${bucketName}.chunks` collection for direct access.
 
 ### gridfs.createReadStream
 

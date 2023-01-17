@@ -41,6 +41,7 @@ const sleep = function (ms) {
 const connectionStringFoo = `mongodb://localhost:27017/foo`;
 const connectionStringBar = `mongodb://localhost:27017/bar`;
 const connectionStringBaz = `mongodb://localhost:27017/baz`;
+const connectionStringGridfs = `mongodb://localhost:27017/grid`;
 const connectionStringCursor = `mongodb://localhost:27017/cursor`;
 let restore;
 
@@ -160,7 +161,7 @@ suite('mongo', () => {
 
       await assert
         .that(async () => {
-          await coll.insert({ foo: 'bar' });
+          await coll.insertOne({ foo: 'bar' });
         })
         .is.not.throwingAsync();
     });
@@ -179,6 +180,51 @@ suite('mongo', () => {
 
         assert.that(gridfs).is.ofType('object');
         assert.that(gridfs.createReadStream).is.ofType('function');
+      });
+
+      test('returns a reference to files collection.', async () => {
+        const db = await mongo.db(connectionStringFoo);
+
+        const gridfs = db.gridfs();
+
+        assert.that(gridfs).is.ofType('object');
+        assert.that(gridfs.getFilesCollection).is.ofType('function');
+        assert.that(gridfs.getFilesCollection()).is.ofType('object');
+        assert.that(gridfs.getFilesCollection().aggregate).is.ofType('function');
+        assert.that(gridfs.getFilesCollection().find).is.ofType('function');
+        assert.that(gridfs.getFilesCollection().namespace).is.endingWith('fs.files');
+      });
+
+      test('returns a reference to chunks collection.', async () => {
+        const db = await mongo.db(connectionStringFoo);
+
+        const gridfs = db.gridfs();
+
+        assert.that(gridfs).is.ofType('object');
+        assert.that(gridfs.getFilesCollection).is.ofType('function');
+        assert.that(gridfs.getChunksCollection()).is.ofType('object');
+        assert.that(gridfs.getChunksCollection().aggregate).is.ofType('function');
+        assert.that(gridfs.getChunksCollection().find).is.ofType('function');
+        assert.that(gridfs.getChunksCollection().namespace).is.endingWith('fs.chunks');
+      });
+
+      test('Uses prefix for gridfs', async () => {
+        const db = await mongo.db(connectionStringGridfs, { bucketName: 'foobar' });
+
+        const gridfs = db.gridfs();
+
+        assert.that(gridfs).is.ofType('object');
+        assert.that(gridfs.getFilesCollection).is.ofType('function');
+        assert.that(gridfs.getFilesCollection().namespace).is.endingWith('foobar.files');
+
+        // write file and test if it is in the right collection
+        const out = await gridfs.createWriteStream('hopperla');
+        const prom = new Promise((resolve) => {
+          out.once('close', resolve);
+        });
+        out.end('Hello, world!');
+        await prom;
+        assert.that(await gridfs.getFilesCollection().count()).is.greaterThan(0);
       });
 
       suite('createReadStream', () => {
