@@ -1,3 +1,10 @@
+## 4.1.0 (2023-01-17)
+
+### Features
+
+
+Added direct access to files and chunks collections ([b0622b4](https://github.com/sealsystems/node-mongo/commit/b0622b4))
+
 ## 4.0.2 (2022-10-28)
 
 ### Chores
