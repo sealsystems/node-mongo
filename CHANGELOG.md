@@ -1,3 +1,10 @@
+## 4.1.1 (2024-01-09)
+
+### Bug Fixes
+
+
+Updated deps ([b63e1e6](https://github.com/sealsystems/node-mongo/commit/b63e1e6))
+
 ## 4.1.0 (2023-01-17)
 
 ### Features

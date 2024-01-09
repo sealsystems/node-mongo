@@ -1,6 +1,6 @@
 {
   "name": "@sealsystems/mongo",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "@sealsystems/mongo makes it easy to connect to MongoDB reliably",
   "author": {
     "name": "SEAL Systems AG",
