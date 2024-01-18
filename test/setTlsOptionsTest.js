@@ -4,6 +4,8 @@ const assert = require('assertthat');
 const { nodeenv } = require('nodeenv');
 const proxyquire = require('proxyquire');
 
+const tlsCert = require('@sealsystems/tlscert');
+
 let keystore;
 
 const setTlsOptions = proxyquire('../lib/setTlsOptions', {
@@ -16,7 +18,8 @@ const setTlsOptions = proxyquire('../lib/setTlsOptions', {
 
 suite('setTlsOptions', () => {
   setup(async () => {
-    keystore = { ca: 'ca', cert: 'cert', key: 'key' };
+    keystore = await tlsCert.get();
+    keystore.ca = keystore.cert;
   });
 
   test('is a function', async () => {
@@ -57,7 +60,7 @@ suite('setTlsOptions', () => {
 
     await setTlsOptions(options);
 
-    assert.that(options.ssl).is.true();
+    assert.that(options.tls).is.true();
 
     restore();
   });
@@ -68,7 +71,7 @@ suite('setTlsOptions', () => {
 
     await setTlsOptions(options);
 
-    assert.that(options.ssl).is.true();
+    assert.that(options.tls).is.true();
 
     restore();
   });
@@ -79,20 +82,7 @@ suite('setTlsOptions', () => {
 
     await setTlsOptions(options);
 
-    assert.that(options.sslCA).is.equalTo(['ca']);
-    assert.that(options.sslCert).is.equalTo('cert');
-    assert.that(options.sslKey).is.equalTo('key');
-
-    restore();
-  });
-
-  test('enforces validation if CA certificate is given.', async () => {
-    const options = {};
-    const restore = nodeenv('TLS_UNPROTECTED', null);
-
-    await setTlsOptions(options);
-
-    assert.that(options.sslValidate).is.true();
+    assert.that(options.secureContext).is.ofType('object');
 
     restore();
   });
@@ -105,7 +95,7 @@ suite('setTlsOptions', () => {
 
     await setTlsOptions(options);
 
-    assert.that(options).is.equalTo({ ssl: true });
+    assert.that(options).is.equalTo({ tls: true });
 
     restore();
   });
