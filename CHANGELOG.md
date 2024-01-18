@@ -1,3 +1,17 @@
+## 4.1.2 (2024-01-09)
+
+### Chores
+
+
+Trigger release ([9cea449](https://github.com/sealsystems/node-mongo/commit/9cea449))
+
+## 4.1.1 (2024-01-09)
+
+### Bug Fixes
+
+
+Updated deps ([b63e1e6](https://github.com/sealsystems/node-mongo/commit/b63e1e6))
+
 ## 4.1.0 (2023-01-17)
 
 ### Features
