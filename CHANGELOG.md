@@ -1,3 +1,16 @@
+## 5.0.0 (2024-01-18)
+
+### Features
+
+
+Updated to mongo driver 6.3 ([53d7a7f](https://github.com/sealsystems/node-mongo/commit/53d7a7f))
+
+
+
+### BREAKING CHANGES
+
+Updated to mongo driver 6.3
+
 ## 4.1.2 (2024-01-09)
 
 ### Chores
