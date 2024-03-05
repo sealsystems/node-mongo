@@ -1,3 +1,10 @@
+## 5.1.0 (2024-03-05)
+
+### Features
+
+
+Added getMongoClient method to db ([f40d511](https://github.com/sealsystems/node-mongo/commit/f40d511))
+
 ## 5.0.0 (2024-01-18)
 
 ### Features
