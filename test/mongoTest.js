@@ -125,6 +125,14 @@ suite('mongo', () => {
       assert.that(db.getMongoClient()).is.ofType('object');
     });
 
+    test('db returns mongodb module', async function () {
+      this.timeout(10 * 1000);
+      const db = await mongo.db(connectionStringFoo);
+
+      assert.that(db).is.ofType('object');
+      assert.that(db.getMongoModule().Long).is.ofType('function');
+    });
+
     test('validates with given CA certificate.', async () => {
       const connectOptions = await mongoMock.db(connectionStringFoo);
 
