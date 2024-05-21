@@ -1,3 +1,10 @@
+## 5.2.0 (2024-05-21)
+
+### Features
+
+
+Updated mongo version to 6.6.2 and export module ([334131c](https://github.com/sealsystems/node-mongo/commit/334131c))
+
 ## 5.1.0 (2024-03-05)
 
 ### Features
