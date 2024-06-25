@@ -1,3 +1,10 @@
+## 5.2.1 (2024-06-25)
+
+### Chores
+
+
+update build config ([1491cf6](https://github.com/sealsystems/node-mongo/commit/1491cf6))
+
 ## 5.2.0 (2024-05-21)
 
 ### Features
