@@ -48,14 +48,14 @@ jobs:
           # Use personal access token, must be set for *each step*
           NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
 
-      - name: Install dependencies
-        run: npm i
+      - name: Install dev dependencies
+        run: npm install --only=dev
         env:
           # Use personal access token, must be set for *each step*
           NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
 
       - name: Install Yeoman
-        run: npm install --no-save --force yo @sealsystems/generator-seal-node
+        run: npm install --no-save --force yo@"4.x" @sealsystems/generator-seal-node
         env:
           # Use personal access token, must be set for *each step*
           NODE_AUTH_TOKEN: ${{ secrets.CI_TOKEN }}
