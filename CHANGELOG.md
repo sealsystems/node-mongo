@@ -1,3 +1,10 @@
+## 5.2.2 (2024-07-17)
+
+### Bug Fixes
+
+
+downgrade mongodb to 5.9.2 ([df3358d](https://github.com/sealsystems/node-mongo/commit/df3358d))
+
 ## 5.2.1 (2024-06-25)
 
 ### Chores
