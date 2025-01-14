@@ -396,13 +396,13 @@ suite('mongo', () => {
 
               assert.that(result).is.true();
 
-              const { stream } = await gridfs.createReadStream(fileName, { noCursorTimeout: true });
+              const { stream } = await gridfs.createReadStream(fileName);
 
               stream.on('data', (chunk) => {
                 try {
                   assert.that(chunk.toString()).is.equalTo(content);
                   // tests in data event, because cursor is created at first read
-                  assert.that(stream.s.cursor.cursorOptions.noCursorTimeout).is.true();
+                  assert.that(stream.s.cursor.cursorOptions.noCursorTimeout).is.falsy();
                 } catch (ex) {
                   reject(ex);
                 }
