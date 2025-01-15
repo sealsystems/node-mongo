@@ -1,5 +1,13 @@
+/* eslint-disable no-constant-condition */
 /* eslint-disable no-async-promise-executor */
 'use strict';
+
+const crypto = require('crypto');
+const fsProm = require('fs/promises');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const streamProm = require('node:stream/promises');
 
 const assert = require('assertthat');
 const { nodeenv } = require('nodeenv');
@@ -266,6 +274,94 @@ suite('mongo', () => {
               await gridfs.createReadStream(fileName);
             })
             .is.throwingAsync();
+        });
+
+        const writeBigFile = async function (fileName, sizeInMb) {
+          const fileHandle = await fsProm.open(fileName, 'w', 0o666);
+          for (let i = 0; i < sizeInMb; i++) {
+            await fileHandle.write(crypto.randomBytes(1024 * 1024));
+          }
+          await fileHandle.close();
+        };
+
+        const compareFiles = async function (fname1, fname2) {
+          const kReadSize = 1024 * 8;
+          let h1, h2;
+          try {
+            h1 = await fsProm.open(fname1);
+            h2 = await fsProm.open(fname2);
+            const [stat1, stat2] = await Promise.all([h1.stat(), h2.stat()]);
+            if (stat1.size !== stat2.size) {
+              return false;
+            }
+            const buf1 = Buffer.alloc(kReadSize);
+            const buf2 = Buffer.alloc(kReadSize);
+            let pos = 0;
+            let remainingSize = stat1.size;
+            while (remainingSize > 0) {
+              const readSize = Math.min(kReadSize, remainingSize);
+              const [r1, r2] = await Promise.all([h1.read(buf1, 0, readSize, pos), h2.read(buf2, 0, readSize, pos)]);
+              if (r1.bytesRead !== readSize || r2.bytesRead !== readSize) {
+                throw new Error('Failed to read desired number of bytes');
+              }
+              if (buf1.compare(buf2, 0, readSize, 0, readSize) !== 0) {
+                return false;
+              }
+              remainingSize -= readSize;
+              pos += readSize;
+            }
+            return true;
+          } finally {
+            if (h1) {
+              await h1.close();
+            }
+            if (h2) {
+              await h2.close();
+            }
+          }
+        };
+
+        test('read/write big file data', async function () {
+          this.timeout(20 * 1000);
+
+          const dbFileName = uuidv4();
+          const fileName = path.join(os.tmpdir(), dbFileName);
+          const fileNameIn = `${fileName}.in`;
+          const fileNameOut = `${fileName}.out`;
+          try {
+            const db = await mongo.db(connectionStringFoo);
+            const gridfs = db.gridfs();
+
+            await writeBigFile(fileNameIn, 200);
+
+            const dbWriteStream = await gridfs.createWriteStream(dbFileName);
+            const fsReadStream = await fs.createReadStream(fileNameIn);
+
+            await streamProm.pipeline(fsReadStream, dbWriteStream);
+            // Wait for a short amount of time to give MongoDB enough time to
+            // actually save the file to GridFS.
+            while (true) {
+              await sleep(100);
+              if (await gridfs.exist(dbFileName)) {
+                break;
+              }
+              console.log('Waiting for file to be written...');
+            }
+
+            const { stream: dbReadStream } = await gridfs.createReadStream(dbFileName);
+            const fsWriteStream = await fs.createWriteStream(fileNameOut);
+
+            await streamProm.pipeline(dbReadStream, fsWriteStream);
+
+            assert.that(await compareFiles(fileNameIn, fileNameOut)).is.true();
+          } finally {
+            try {
+              await fsProm.unlink(fileNameIn);
+            } catch {
+              // ignore this
+            }
+            await fsProm.unlink(fileNameOut);
+          }
         });
 
         test('reads file', async function () {
