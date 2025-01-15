@@ -1,3 +1,10 @@
+## 5.2.4 (2025-01-15)
+
+### Bug Fixes
+
+
+Use Driver 6.12.0. and added test for huge data stream ([2fe58d3](https://github.com/sealsystems/node-mongo/commit/2fe58d3))
+
 ## 5.2.3 (2025-01-08)
 
 ### Bug Fixes
