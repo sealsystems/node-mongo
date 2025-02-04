@@ -1,3 +1,10 @@
+## 5.2.6 (2025-02-04)
+
+### Bug Fixes
+
+
+Updated deps ([1a9f1f7](https://github.com/sealsystems/node-mongo/commit/1a9f1f7))
+
 ## 5.2.5 (2025-01-28)
 
 ### Bug Fixes
